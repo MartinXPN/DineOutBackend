@@ -49,13 +49,13 @@ class Place(models.Model):
 
 
 class PlaceBranch(models.Model):
-    place = ForeignKey(Place, on_delete=models.CASCADE)
+    place = ForeignKey(Place, on_delete=models.CASCADE, related_name='branches')
     address = OneToOneField(Address, on_delete=models.CASCADE, primary_key=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message="Phone number format must be: '+999999999'. Up to 15 digits.")
     phoneNumber = models.CharField(validators=[phone_regex], max_length=17, blank=True)
     services = models.ManyToManyField(Service)
-    info = models.ManyToManyField(PlaceInfo)
+    place_info = models.ManyToManyField(PlaceInfo)
 
     def __str__(self):
         return self.place.name + '\tlocated at: ' + self.address.name
@@ -63,7 +63,7 @@ class PlaceBranch(models.Model):
 
 class Image(models.Model):
     url = URLField(max_length=300, name='imageUrl')
-    branch = ForeignKey(PlaceBranch, on_delete=models.CASCADE)
+    branch = ForeignKey(PlaceBranch, on_delete=models.CASCADE, related_name='images')
 
     def __str__(self):
         return 'Image for: ' + self.branch.place.name

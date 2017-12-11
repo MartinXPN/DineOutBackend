@@ -7,7 +7,7 @@ from places.models import Place, PlaceBranch, Image, Service, Address, PlaceInfo
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ('url',)
+        fields = '__all__'
 
 
 class AddressSerializer(serializers.ModelSerializer):
@@ -29,9 +29,9 @@ class ServiceSerializer(serializers.ModelSerializer):
 
 
 class BranchSerializer(serializers.ModelSerializer):
-    images = ImageSerializer(many=True, read_only=True)
-    services = ServiceSerializer(many=True, read_only=True)
-    place_info = PlaceInfoSerializer(many=True, read_only=True)
+    images = ImageSerializer(many=True)
+    services = ServiceSerializer(many=True)
+    place_info = PlaceInfoSerializer(many=True)
 
     class Meta:
         model = PlaceBranch
@@ -39,7 +39,7 @@ class BranchSerializer(serializers.ModelSerializer):
 
 
 class PlaceSerializer(serializers.ModelSerializer):
-    branches = BranchSerializer(many=True, read_only=True)
+    branches = BranchSerializer(many=True)
 
     class Meta:
         model = Place

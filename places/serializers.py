@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.relations import StringRelatedField
 
 from places.models import Place, PlaceBranch, Image, Service, Address, PlaceInfo
 
@@ -31,12 +30,13 @@ class ServiceSerializer(serializers.ModelSerializer):
 class BranchSerializer(serializers.ModelSerializer):
     images = serializers.StringRelatedField(many=True)
     phoneNumbers = serializers.StringRelatedField(many=True)
+    address = AddressSerializer(many=False)
     services = ServiceSerializer(many=True)
     placeInfo = PlaceInfoSerializer(many=True)
 
     class Meta:
         model = PlaceBranch
-        fields = '__all__'
+        exclude = ('place',)
 
 
 class PlaceSerializer(serializers.ModelSerializer):

@@ -53,7 +53,7 @@ class Place(models.Model):
 
 class PlaceBranch(models.Model):
     place = ForeignKey(Place, on_delete=models.CASCADE, related_name='branches')
-    address = OneToOneField(Address, on_delete=models.CASCADE, primary_key=True)
+    address = OneToOneField(Address, on_delete=models.CASCADE)
     services = models.ManyToManyField(Service)
     placeInfo = models.ManyToManyField(PlaceInfo)
 

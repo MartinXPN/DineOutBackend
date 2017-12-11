@@ -29,9 +29,10 @@ class ServiceSerializer(serializers.ModelSerializer):
 
 
 class BranchSerializer(serializers.ModelSerializer):
-    images = ImageSerializer(many=True)
+    images = serializers.StringRelatedField(many=True)
+    phoneNumbers = serializers.StringRelatedField(many=True)
     services = ServiceSerializer(many=True)
-    place_info = PlaceInfoSerializer(many=True)
+    placeInfo = PlaceInfoSerializer(many=True)
 
     class Meta:
         model = PlaceBranch

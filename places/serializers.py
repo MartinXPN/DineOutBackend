@@ -1,15 +1,46 @@
 from rest_framework import serializers
+from rest_framework.relations import StringRelatedField
 
-from places.models import Place, PlaceBranch
+from places.models import Place, PlaceBranch, Image, Service, Address, PlaceInfo
 
 
-class PlaceSerializer(serializers.ModelSerializer):
+class ImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Place
-        fields = '__all__'
+        model = Image
+        fields = ('url',)
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        exclude = ('id',)
+
+
+class PlaceInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlaceInfo
+        exclude = ('id',)
+
+
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Service
+        exclude = ('id',)
 
 
 class BranchSerializer(serializers.ModelSerializer):
+    images = ImageSerializer(many=True, read_only=True)
+    services = ServiceSerializer(many=True, read_only=True)
+    place_info = PlaceInfoSerializer(many=True, read_only=True)
+
     class Meta:
         model = PlaceBranch
+        fields = '__all__'
+
+
+class PlaceSerializer(serializers.ModelSerializer):
+    branches = BranchSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Place
         fields = '__all__'

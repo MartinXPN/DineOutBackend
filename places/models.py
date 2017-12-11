@@ -63,7 +63,7 @@ class PlaceBranch(models.Model):
 
 class Image(models.Model):
     url = URLField(max_length=300, name='imageUrl')
-    place = ForeignKey(Place, on_delete=models.CASCADE)
+    branch = ForeignKey(PlaceBranch, on_delete=models.CASCADE)
 
     def __str__(self):
-        return 'Image for: ' + self.place.name
+        return 'Image for: ' + self.branch.place.name

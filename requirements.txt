@@ -2,3 +2,7 @@ django
 djangorestframework
 markdown
 django-filter
+postgresql
+postgis
+gdal
+libgeoip

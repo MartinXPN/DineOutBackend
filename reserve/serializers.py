@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from places.serializers import BranchSerializer
 from reserve.models import Reservation
 
 

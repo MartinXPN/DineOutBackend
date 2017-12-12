@@ -4,20 +4,21 @@ from django.db import models
 from django.db.models import ForeignKey, PositiveSmallIntegerField, CharField, DateTimeField
 
 from places.models import PlaceBranch
+from reserve.validators import FutureDateRangeValidator
 
 
 class Reservation(models.Model):
     placeBranch = ForeignKey(PlaceBranch, on_delete=models.CASCADE)
     user = ForeignKey(User, on_delete=models.CASCADE)
 
-    date = DateTimeField()
+    date = DateTimeField(validators=[FutureDateRangeValidator()])
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message="Phone number format must be: '+999999999'. Up to 15 digits.")
     phoneNumber = models.CharField(validators=[phone_regex], max_length=17, blank=True)
 
     # ensure that group size is a positive integer with value smaller than 20
     groupSize = PositiveSmallIntegerField(validators=[
-            MaxValueValidator(20),
+            MaxValueValidator(50),
             MinValueValidator(1)
         ])
 

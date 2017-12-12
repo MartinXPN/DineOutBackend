@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
     'django.contrib.gis',
     'rest_framework',
+    'django_extensions',
     'places',
     'reserve',
 ]

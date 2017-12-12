@@ -6,7 +6,7 @@ from places.serializers import PlaceSerializer, BranchSerializer
 
 class PlacesList(generics.ListCreateAPIView):
     model = Place
-    queryset = model.objects.all()
+    queryset = model.objects.all().order_by('-rating')
     serializer_class = PlaceSerializer
 
 
